@@ -1,0 +1,11 @@
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        dict_s = {}
+        for char in s:
+            dict_s[char] = dict_s.get(char, 0) + 1
+        for char in t:
+            dict_s[char] = dict_s.get(char, 0) - 1
+        for val in dict_s.values():
+            if val != 0:
+                return False
+        return True
