@@ -1,0 +1,5 @@
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        if Counter(magazine) & Counter(ransomNote) == Counter(ransomNote):
+            return True
+        return False
