@@ -5,7 +5,6 @@ class Solution:
             dict_s[char] = dict_s.get(char, 0) + 1
         for char in t:
             dict_s[char] = dict_s.get(char, 0) - 1
-        for val in dict_s.values():
-            if val != 0:
-                return False
-        return True
+        if dict_s[char] == 0:
+                del dict_s[char]
+        return True if len(dict_s) == 0 else False     
