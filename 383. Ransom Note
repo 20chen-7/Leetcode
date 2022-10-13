@@ -1,0 +1,12 @@
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        if len(ransomNote) > len(magazine):
+            return False
+        dict_m = {}
+        for char in magazine:
+            dict_m[char] = dict_m.get(char, 0) + 1
+        for char in ransomNote:
+            dict_m[char] = dict_m.get(char, 0) - 1
+            if dict_m[char] < 0:
+                return False
+        return True
