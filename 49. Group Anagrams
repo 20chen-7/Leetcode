@@ -1,0 +1,7 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        dict_ = {}
+        for item in strs:
+            key = tuple(sorted(item))
+            dict_[key] = dict_.get(key, []) + [item]
+        return list(dict_.values())
