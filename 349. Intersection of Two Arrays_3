@@ -1,0 +1,17 @@
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        dic = {}
+        for c in nums1:
+            if not dic.get(c):
+                dic[c] = 1
+        l, r = 0, len(nums2)-1
+        while l < r:
+            if dic.get(nums2[l]):
+                dic[nums2[l]] -= 1
+                l += 1
+            else:
+                nums2[l], nums2[r] = nums2[r], nums2[l]
+                r -= 1
+        if dic.get(nums2[l]):
+            l += 1
+        return nums2[0:l]
