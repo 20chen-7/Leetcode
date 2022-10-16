@@ -1,0 +1,15 @@
+class Solution:
+    def decodeString(self, s: str) -> str:
+        stack, res, num = [], '', 0
+        for c in s:
+            if c == '[':
+                stack.append([num, res])
+                num, res = 0, ''
+            elif c == ']':
+                curr_num, last_res = stack.pop()
+                res = last_res + res*curr_num
+            elif '0' <= c <= '9':
+                num = num* 10 + int(c)
+            else:
+                res += c
+        return res
