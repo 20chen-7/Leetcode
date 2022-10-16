@@ -1,0 +1,55 @@
+class Solution:
+    def calculate(self, s: str) -> int:
+        stack_num, stack_opt = [], []
+        i = 0
+        priority = { '(': 0, ')': 0, '+': 1, '-': 1, '*' : 2, '/': 2}
+        while i < len(s):
+            if s[i] == ' ':
+                i += 1
+                continue
+            if '0' <= s[i] <= '9':
+                j = i
+                while i + 1 < len(s) and '0' <= s[i+1] <= '9':
+                    i += 1
+                num = int(s[j:i+1])
+                stack_num.append(num)
+            elif s[i] == '(':
+                stack_opt.append(s[i])
+            elif s[i] == ')':
+                while stack_opt[-1] != ')':
+                    opt = stack_opt.pop()
+                    A = stack_num.pop()
+                    B = stack_num.pop()
+                    res = self.calc(A, B , opt)
+                    stack_num.append(res)
+                stack_opt.pop()
+            else:
+                while stack_opt and prioriry[stack_opt[-1]] >= priority[s[i]]:
+                    opt = stack_opt.pop()
+                    A = stack_num.pop()
+                    B = stack_num.pop()
+                    res = self.calc(A, B , opt)
+                    stack_num.append(res)
+                stack_opt.append(s[i])
+            i += 1
+        while stack_opt:
+            opt = stack_opt.pop()
+            A = stack_num.pop()
+            B = stack_num.pop()
+            res = self.calc(A, B , opt)
+            stack_num.append(res)
+        return stack_num[-1]
+    def calc(self, nums1, nums2, opt):
+        if opt == '+':
+            return int(nums1)+int(nums2)
+        elif opt == '-':
+            return int(nums2)-int(nums1)
+        elif opt == '*':
+            return int(nums1)*int(nums2)
+        elif opt == '/':
+            return int(int(nums1)/int(nums2))
+            
+            
+               
+          
+        
