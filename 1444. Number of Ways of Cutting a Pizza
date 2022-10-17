@@ -1,0 +1,25 @@
+import numpy as np
+class Solution:
+    def ways(self, pizza: List[str], k: int) -> int:
+        module = int(1e9+7)
+        rows, cols = len(pizza), len(pizza[0])
+        G = np.array([np.array(['A'==ch for ch in s], dtype=bool) for s in pizza])    
+        DP = {}
+        def dfs(row, col, remain):
+            if (row, col, remain) in DP: return DP[(row, col, remain)]
+            if remain <= 0:
+                return 1 if True in G[row:, col:] else 0
+            cnt = 0
+            nr, nc = row, col
+            while nr < rows and True not in G[nr, col:]: nr += 1
+            while nr < rows-1:
+                nr += 1
+                cnt = (cnt + dfs(nr, col, remain-1))%module
+            while nc < cols and True not in G[row:, nc]: nc += 1
+            while nc < cols-1:
+                nc += 1
+                cnt = (cnt + dfs(row, nc, remain-1))%module
+            DP[(row, col, remain)] = cnt
+            return cnt
+        return dfs(0,0,k-1)
+        
