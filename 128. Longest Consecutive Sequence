@@ -1,0 +1,28 @@
+import collections
+class UnionFind:
+    def __init__(self, nums):
+        self.parent = {num: num for num in nums}
+        self.cnt = collections.defaultdict(lambda: 1)
+    def find(self, x):
+        while x != self.parent[x]:
+            x = self.parent[x]
+        return x
+    def union(self, x, y):
+        if y not in self.parent:
+            return 1
+        root1, root2 = self.find(x), self.find(y)
+        if root1 == root2:
+            return self.cnt[root1]
+        self.parent[root2] = root1
+        self.cnt[root1] += self.cnt[root2]
+        return self.cnt[root1]
+        
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if len(nums) == 0:
+            return 0
+        union = UnionFind(nums)
+        res = 1
+        for num in nums:
+            res = max(res, union.union(num, num+1))
+        return res
