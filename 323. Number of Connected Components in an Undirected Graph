@@ -1,0 +1,35 @@
+lass UnionFind:
+    def __init__(self, n):
+        self.parent = [x for x in range(n)]
+        self.size = [1 for _ in range(n)]
+        self.part = n
+    def find(self, x):
+        if self.parent[x] == x:
+            return x
+        return self.find(self.parent[x])
+    def union(self, x, y):
+        root_x, root_y = self.find(x), self.find(y)
+        if root_x == root_y:
+            return False
+        if self.size[root_x] > self.size[root_y]:
+            root_x, root_y = root_y, root_x
+        self.parent[root_y] = root_x
+        self.size[root_x] += self.size[root_y]
+        self.part -= 1
+        return True
+    def connected(self, x,y):
+        return self.find(x) == self.find(y)
+    def get_part(self, x):
+        root_x = self.find(x)
+        return self.size[root_x]
+        
+class Solution:
+    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        UF = UnionFind(n)
+        for x, y in edges:
+            UF.union(x,y)
+        return UF.part
+        
+        
+        
+        
