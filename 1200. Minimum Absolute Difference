@@ -1,0 +1,9 @@
+class Solution:
+    def minimumAbsDifference(self, arr: List[int]) -> List[List[int]]:
+        m, res = float('inf'), []
+        for a, b in pairwise(sorted(arr)):
+            if (cur:= b-a) < m:
+                m, res = cur, [[a, b]]
+            elif cur == m:
+                res.append([a, b])
+        return res
