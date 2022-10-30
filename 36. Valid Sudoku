@@ -1,0 +1,8 @@
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        print("board", board)
+        rows = [[x for x in y if x != "."] for y in board]
+        cols = [[x for x in y if x != "."] for y in zip(*board)]
+        pal = [[board[i+m][j+n] for m in range(3) for n in range(3) if board[i+m][j+n] != "."] for i in (0,3,6) for j in (0, 3, 6)]
+        return all(len(x) == len(set(x)) for x in (*cols, *rows, *pal))
+        
