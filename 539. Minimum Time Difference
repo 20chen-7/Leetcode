@@ -1,0 +1,11 @@
+class Solution:
+    def findMinDifference(self, timePoints: List[str]) -> int:
+        n = len(timePoints)*2
+        nums, idx = [0]*n, 0
+        for time in timePoints:
+            h, m = int(time[:2]), int(time[-2:])
+            nums[idx] = h*60+m
+            nums[idx+1] = nums[idx] + 1440
+            idx += 2
+        nums.sort()
+        return min(nums[i+1]-nums[i] for i in range(n-1))
