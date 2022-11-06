@@ -1,0 +1,17 @@
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        pos_1, pos_2 = 0, len(matrix[0])-1
+        while pos_1<pos_2:
+            add = 0
+            while add < pos_2-pos_1:
+                temp = matrix[pos_2-add][pos_1]
+                matrix[pos_2-add][pos_1] = matrix[pos_2][pos_2-add]
+                matrix[pos_2][pos_2-add] = matrix[pos_1+add][pos_2]
+                matrix[pos_1+add][pos_2] = matrix[pos_1][pos_1+add]
+                matrix[pos_1][pos_1+add] = temp
+                add += 1
+            pos_1 += 1
+            pos_2 -= 1
