@@ -1,0 +1,9 @@
+class Solution:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        events = [(x[0], 1) for x in intervals] + [(x[1], -1) for x in intervals]
+        events.sort()
+        ans = cur = 0
+        for _, e in events:
+            cur += e
+            ans = max(ans, cur)
+        return ans
