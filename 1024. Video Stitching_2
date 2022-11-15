@@ -1,0 +1,16 @@
+class Solution:
+    def videoStitching(self, clips: List[List[int]], time: int) -> int:
+        furthest = [0]*time
+        for s, e in clips:
+            for i in range(s, e+1):
+                if i >= time:
+                    break
+                furthest[i] = max(furthest[i], e)
+        end = last = cnt = 0
+        for i in range (time):
+            last = max(furthest[i], last)
+            if i == last: return -1
+            if i == end:
+                cnt += 1
+                end = last
+        return cnt
