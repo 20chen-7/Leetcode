@@ -1,0 +1,12 @@
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        bits = [0]*32
+        for num in nums:
+            for j in range(32):
+                bits[j] += num&1
+                num >>= 1
+        res, m = 0, 3
+        for i in range(32):
+            res <<= 1
+            res |= bits[31-i]% m
+        return res if bits[31]%3 == 0 else ~(res^0xffffffff)
