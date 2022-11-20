@@ -1,0 +1,12 @@
+from scipy.optimize import linprog
+class Solution:
+    def maximumRequests(self, n: int, requests: List[List[int]]) -> int:
+        leng = len(requests)
+        A = [[0 for _ in range(leng)] for _ in range(n)]
+        b = [0]*n
+        cost = [-1]*leng
+        for i, (start, end) in enumerate(requests):
+            A[start][i] -= 1
+            A[end][i] += 1
+        res = linprog(cost, A_eq = A, b_eq = b, bounds = (0,1))
+        return -round(res.fun)
