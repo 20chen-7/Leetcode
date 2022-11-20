@@ -1,0 +1,16 @@
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        res = [0]*len(nums)
+        cnt = 0
+        for num in nums:
+            l, r = 0, cnt
+            while l < r:
+                m = (l+r)//2
+                if res[m] < num:
+                    l = m+1
+                else:
+                    r = m
+            res[l] = num
+            if r == cnt:
+                cnt += 1
+        return cnt
